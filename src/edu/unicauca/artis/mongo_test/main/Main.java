@@ -177,16 +177,16 @@ public class Main {
 		// mongoClient.close();
 
 		// ***** Style Console *****//
-		/*
-		 * TextAttributes attrs = new TextAttributes(Color.GREEN, Color.BLACK);
-		 * s_console.setTextAttributes(attrs);
-		 * System.out.println("\nPrueba Finalizada!");
-		 */
+		
+		TextAttributes attrs = new TextAttributes(Color.GREEN, Color.BLACK);
+		s_console.setTextAttributes(attrs);
+		System.out.println("\nPrueba Finalizada!");
+		 
 
 	}
 
-	/*
-	 * private static final Console s_console; static { s_console =
-	 * Enigma.getConsole("MetaConsole"); }
-	 */
+	
+	 private static final Console s_console; static { s_console =
+	 Enigma.getConsole("MetaConsole"); }
+	 
 }
