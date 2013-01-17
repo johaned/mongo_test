@@ -3,6 +3,7 @@ package edu.unicauca.artis.mongo_test.model;
 import java.io.WriteAbortedException;
 import java.net.UnknownHostException;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -20,6 +21,7 @@ public class MongoDBConnection {
 		mc = new MongoClient();
 		db = mc.getDB("test");
 		coll = db.getCollection("test");
+		//coll.createIndex(new BasicDBObject("index_test", 1));
 	}
 	
 	public static MongoDBConnection getInstance() throws UnknownHostException{
@@ -56,6 +58,17 @@ public class MongoDBConnection {
 		} finally {
 			c.close();
 		}
+	}
+	public void get_document_by_key(String key, Object value){
+		DBCursor cursor = coll.find(new BasicDBObject(key,value));
+
+        try {
+            while(cursor.hasNext()) {
+                System.out.println(cursor.next());
+            }
+        } finally {
+            cursor.close();
+        }
 	}
 
 }

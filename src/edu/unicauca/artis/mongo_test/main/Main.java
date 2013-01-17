@@ -22,6 +22,7 @@ import edu.unicauca.artis.mongo_test.model.MongObject;
 import edu.unicauca.artis.mongo_test.model.MongObjectThread;
 import edu.unicauca.artis.mongo_test.model.MongoDBConnection;
 import edu.unicauca.artis.mongo_test.model.Template;
+import edu.unicauca.artis.mongo_test.model.TimeOfLife;
 import enigma.console.Console;
 import enigma.console.TextAttributes;
 import enigma.core.Enigma;
@@ -33,9 +34,10 @@ public class Main {
 	 */
 	public static void main(String[] args) throws UnknownHostException {
 
-		int DEBUG = 2;
+		int DEBUG = 5;
 
 		MongoDBConnection mdbc = MongoDBConnection.getInstance();
+		TimeOfLife tol = new TimeOfLife();
 
 		switch (DEBUG) {
 		case 1: {// just watch
@@ -63,17 +65,23 @@ public class Main {
 			mdbc.remove_all_doc_by_coll();
 			break;
 		}
-		case 4:{// watch and remove
+		case 4: {// watch and remove
 			mdbc.see_all_doc_by_coll();
 			mdbc.remove_all_doc_by_coll();
 			break;
 		}
-		default:{
+		case 5: {// find simple query
+			tol.set_home_time(System.currentTimeMillis());
+			mdbc.get_document_by_key("id", 4);
+			tol.set_end_time(System.currentTimeMillis());
+			Log.print("tiempo de consulta: "+tol.get_tot_()+" ms");
+			break;
+		}
+		default: {
 			Log.print("Te equivocaste de numero :(");
 			break;
 		}
 		}
-		
 
 		/*
 		 * MongoClient mongoClient = new MongoClient(); DB db =
@@ -177,16 +185,16 @@ public class Main {
 		// mongoClient.close();
 
 		// ***** Style Console *****//
-		
-		TextAttributes attrs = new TextAttributes(Color.GREEN, Color.BLACK);
-		s_console.setTextAttributes(attrs);
+
+		/*TextAttributes attrs = new TextAttributes(Color.GREEN, Color.BLACK);
+		s_console.setTextAttributes(attrs);*/
 		System.out.println("\nPrueba Finalizada!");
-		 
 
 	}
 
-	
-	 private static final Console s_console; static { s_console =
-	 Enigma.getConsole("MetaConsole"); }
-	 
+	/*private static final Console s_console;
+	static {
+		s_console = Enigma.getConsole("MetaConsole");
+	}*/
+
 }
