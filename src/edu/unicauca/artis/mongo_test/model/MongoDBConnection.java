@@ -59,15 +59,19 @@ public class MongoDBConnection {
 			c.close();
 		}
 	}
-	public void get_document_by_key(String key, Object value){
+	@SuppressWarnings("finally")
+	public BasicDBObject get_document_by_key(String key, Object value){
 		DBCursor cursor = coll.find(new BasicDBObject(key,value));
-
+		BasicDBObject dbo = new BasicDBObject();
         try {
             while(cursor.hasNext()) {
-                System.out.println(cursor.next());
+            	dbo = (BasicDBObject) cursor.next();
+                System.out.println(dbo);
+                
             }
         } finally {
             cursor.close();
+            return dbo;
         }
 	}
 

@@ -1,12 +1,20 @@
 package edu.unicauca.artis.mongo_test.main;
 
 import java.awt.Color;
+import java.awt.image.DataBufferByte;
+import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.Arrays;
 import java.util.Vector;
+
+import javax.xml.stream.FactoryConfigurationError;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactoryConfigurationError;
 
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
@@ -16,6 +24,7 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.DB;
 
+import edu.unicauca.artis.mongo_test.logic.ParserXML;
 import edu.unicauca.artis.mongo_test.logic.WriterMongo;
 import edu.unicauca.artis.mongo_test.miscellaneus.Log;
 import edu.unicauca.artis.mongo_test.model.MongObject;
@@ -34,9 +43,10 @@ public class Main {
 	 */
 	public static void main(String[] args) throws UnknownHostException {
 
-		int DEBUG = 5;
+		int DEBUG = 7;
 
 		MongoDBConnection mdbc = MongoDBConnection.getInstance();
+		ParserXML pxml = new ParserXML();
 		TimeOfLife tol = new TimeOfLife();
 
 		switch (DEBUG) {
@@ -75,6 +85,41 @@ public class Main {
 			mdbc.get_document_by_key("id", 4);
 			tol.set_end_time(System.currentTimeMillis());
 			Log.print("tiempo de consulta: "+tol.get_tot_()+" ms");
+			break;
+		}
+		case 6: {// find simple query
+			//tol.set_home_time(System.currentTimeMillis());
+			try {
+				BasicDBObject dbo = mdbc.get_document_by_key("id", 4);
+				ParserXML.to_convert_simple_xml(dbo);
+			} catch (TransformerConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (XMLStreamException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FactoryConfigurationError e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (TransformerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (TransformerFactoryConfigurationError e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//tol.set_end_time(System.currentTimeMillis());
+			//Log.print("tiempo de consulta: "+tol.get_tot_()+" ms");
+			break;
+		}
+		case 7: {// find simple query
+			//tol.set_home_time(System.currentTimeMillis());
+			ParserXML.to_convert_object(mdbc.get_document_by_key("id", 4));
+			/*tol.set_end_time(System.currentTimeMillis());
+			Log.print("tiempo de consulta: "+tol.get_tot_()+" ms");*/
 			break;
 		}
 		default: {
