@@ -114,7 +114,7 @@ public class MongObjectThread implements Runnable{
 		BasicDBObject bdbo = new BasicDBObject();
 		bdbo.put("id", index);
 		bdbo.put("name", "adaptación");
-		bdbo.put("datatype", "integer");
+		bdbo.put("dataType", "integer");
 		bdbo.put("refProt", "1.2.5.4.1.8."+index_dep+"."+index_dep_+"."+index);
 		bdbo.put("value", index*Math.random());
 		bdbo.put("tol", 0.05);
