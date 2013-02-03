@@ -69,9 +69,10 @@ public class Main {
 			System.out.println("6. Convertir un documeto de la BD a XML...");
 			System.out.println("7. Convertir un documento a XML Mbeans independientes!");
 			System.out.println("8. Prueba simple de Mbean a XML...");
-			System.out.println("9. Salir");
+			System.out.println("9. Generar una agregacion simple, max ID de la coleccion...");
+			System.out.println("10. Salir");
 			int selection = scanner.nextInt();
-			if (selection == 9) {
+			if (selection == 10) {
 				break;
 			}
 			switch (selection) {
@@ -185,6 +186,14 @@ public class Main {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				tol.set_end_time(System.currentTimeMillis());
+				Log.print("tiempo de consulta: " + tol.get_tot_() + " ms");
+				break;
+			}
+			case 9: {// test aggregation framework
+				
+				tol.set_home_time(System.currentTimeMillis());
+				mdbc.do_test_aggregation();
 				tol.set_end_time(System.currentTimeMillis());
 				Log.print("tiempo de consulta: " + tol.get_tot_() + " ms");
 				break;

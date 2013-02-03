@@ -3,6 +3,7 @@ package edu.unicauca.artis.mongo_test.model;
 import java.io.WriteAbortedException;
 import java.net.UnknownHostException;
 
+import com.mongodb.AggregationOutput;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -73,6 +74,17 @@ public class MongoDBConnection {
             cursor.close();
             return dbo;
         }
+	}
+
+	public void do_test_aggregation() {
+		DBObject fields = new BasicDBObject("id",1);
+		//fields.put("lyr", 1);
+		DBObject projection = new BasicDBObject("$project",fields);
+		DBObject groupFields = new BasicDBObject( "_id", "maximo");
+		groupFields.put("max", new BasicDBObject( "$max", "$id"));
+		DBObject group = new BasicDBObject("$group", groupFields);
+		AggregationOutput output = coll.aggregate( projection, group );
+		System.out.println(output.getCommandResult());
 	}
 
 }
